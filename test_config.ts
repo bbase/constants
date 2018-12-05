@@ -134,7 +134,7 @@ const a = {
         "explorer": "https://www.nanode.co",
         "api":  "http://35.227.18.245:7076/",
         "code": 1,
-        "decimals": 10 ** 18,
+        "decimals": 10 ** 30,
         "fee_label": "",
         "noFee": true,
         "base": true,

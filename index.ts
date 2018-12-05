@@ -52,7 +52,7 @@ export const isValidAddress = (config: any, address, rel, base) => {
 
 export const toBitcoinJS = (o) => {
     return Object.assign({}, o, {
-        messagePrefix: null, // TODO
+        messagePrefix: '\x18Bitcoin Signed Message:\n', // TODO
         bip32: {
             public: o.versions.bip32.public,
             private: o.versions.bip32.private
