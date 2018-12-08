@@ -28,7 +28,7 @@ export const getConfig = (config: any, rel: string, base: string) => {
 
 export const isValidAddress = (config: any, address, rel, base) => {
     let networkType = `prod`;
-    if (config[rel].code == 1) {
+    if (config[base].code == 1) {
         networkType = `testnet`;
     }
     switch (base) {
