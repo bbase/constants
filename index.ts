@@ -9,7 +9,8 @@ export const darkColors = {
         contrastText: "#fff",
     }
 }
-
+export const MAX_DECIMAL = 6;
+export const MAX_DECIMAL_FIAT = 2;
 export const isTestnet = true;
 
 export const transferABI = [{ constant: !1, inputs: [{ name: "_to", type: "address" }, { name: "_value", type: "uint256" }], name: "transfer", outputs: [{ name: "", type: "bool" }], type: "function" }];

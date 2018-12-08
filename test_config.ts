@@ -150,7 +150,7 @@ const a = {
         "code": 1,
         "decimals": 10 ** 18,
         "fee_label": "VTHO",
-        "dualFee": true,
+        "noFee": true,
         "base": true,
         "name": "Vechain",
         "forks": [],
