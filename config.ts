@@ -174,6 +174,7 @@ const a = {
         name: "Vechain",
         forks: [],
         energy_ticker: "VTHO",
+        chainTag: 74, // 0x4a
     },
     XRP: {
         explorer: "https://xrpcharts.ripple.com/#/transactions",

@@ -145,7 +145,7 @@ const a = {
     VET: {
         explorer: "https://testnet.veforge.com",
         api: "https://testnet.veforge.com/api",
-        rpc: "https://0e4039cc.ngrok.io",
+        rpc: "https://c089ba39.ngrok.io",
         assets: require("./vet_assets.json"),
         code: 1,
         decimals: 10 ** 18,
@@ -155,6 +155,7 @@ const a = {
         name: "Vechain",
         forks: [],
         energy_ticker: "VTHO",
+        chainTag: 39, // 0x27
     },
     XRP: {
         explorer: "https://xrpcharts.ripple.com/#/transactions",
