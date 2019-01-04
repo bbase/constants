@@ -1,4 +1,6 @@
-const a = {
+import {C} from './interfaces';
+
+const a: C = {
     BTC: {
         explorer: "https://blocktrail.com/BTC",
         api: "https://insight.bitpay.com/api",

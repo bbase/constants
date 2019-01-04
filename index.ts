@@ -1,3 +1,5 @@
+import { C, RB, ConfigType, AssetType} from './interfaces';
+export * from './interfaces';
 import WAValidator from "wallet-address-validator";
 export const etherscan_api_key = "8FISWFNZET4P2J451BY5I5GERA5MZG34S2";
 export const darkColors = {
@@ -14,31 +16,30 @@ export const isTestnet = true;
 
 export const transferABI = [{ constant: !1, inputs: [{ name: "_to", type: "address" }, { name: "_value", type: "uint256" }], name: "transfer", outputs: [{ name: "", type: "bool" }], type: "function" }];
 
-export const getAtomicValue = (config: any, rel, base) => {
-    return config[rel] ? config[rel].decimals : 10 ** config[base].assets[rel].decimals;
+export const getAtomicValue = (config: C, rb: RB): number => {
+    return config[rb.rel] ? config[rb.rel].decimals : 10 ** config[rb.base].assets[rb.rel].decimals;
 };
-export const getConfig = (config: any, rel: string, base: string) => {
-    return config[rel] ? config[rel] : {
-        explorer: config[base].explorer,
-        api: config[base].api,
-        rpc: config[base].rpc, ...config[base].assets[rel]};
+export const getConfig = (config: C, rb: RB): ConfigType | ConfigType & AssetType =>  {
+    return config[rb.rel] ? config[rb.rel] : {
+        ...config[rb.base]
+        , ...config[rb.base].assets[rb.rel]};
 };
 
-export const isValidAddress = (config: any, address, rel, base) => {
+export const isValidAddress = (config: C, address: string, rb: RB): boolean => {
     let networkType = `prod`;
-    if (config[base].code == 1) {
+    if (config[rb.base].code == 1) {
         networkType = `testnet`;
     }
-    switch (base) {
+    switch (rb.base) {
         case "BTC":
         case "NEO":
         case "NANO":
-            if (WAValidator.validate(address, rel, networkType)) { return true; }
+            if (WAValidator.validate(address, rb.rel, networkType)) { return true; }
         case "XRP":
             return true;
         default:
         case "ETH":
-            if (WAValidator.validate(address, base, networkType)) { return true; }
+            if (WAValidator.validate(address, rb.base, networkType)) { return true; }
             break;
     }
     return false;
@@ -75,3 +76,4 @@ export const smartTrim = (string, maxLength) => {
     return string.substring(0, midpoint - lstrip) + "..."
         + string.substring(midpoint + rstrip);
 };
+
