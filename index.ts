@@ -30,18 +30,7 @@ export const isValidAddress = (config: C, address: string, rb: RB): boolean => {
     if (config[rb.base].code == 1) {
         networkType = `testnet`;
     }
-    switch (rb.base) {
-        case "BTC":
-        case "NEO":
-        case "NANO":
-            if (WAValidator.validate(address, rb.rel, networkType)) { return true; }
-        case "XRP":
-            return true;
-        default:
-        case "ETH":
-            if (WAValidator.validate(address, rb.base, networkType)) { return true; }
-            break;
-    }
+    if (WAValidator.validate(address, config[rb.base].hasOwnProperty("assets") ? rb.base: rb.rel, networkType)) return true;
     return false;
 };
 
