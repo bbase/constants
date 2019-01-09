@@ -66,3 +66,20 @@ export const smartTrim = (string, maxLength) => {
         + string.substring(midpoint + rstrip);
 };
 
+export const changelog = [
+{
+  title: "v0.02",
+  captions: [
+    "Added feature to remember mnemonic and passphrase from settings",
+    "Added feature to lock, unlock and forget wallets from settings",
+    "Ability to sort coins by price and name"
+  ],
+},
+{
+  title: "v0.01",
+  captions: [
+    "Added BTC, ETH, NEO, NANO, XRP, VET protocol",
+    "Added Backup and Restore feature from settings"
+  ],
+},
+]
