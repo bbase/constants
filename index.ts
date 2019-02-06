@@ -3,9 +3,10 @@ export * from './interfaces';
 import WAValidator from "wallet-address-validator";
 import { Socket } from 'phoenix';
 import { http2Ws } from 'app/utils';
+const isTestnet = process.env.NODE_ENV !== 'production';
 export const etherscan_api_key = "8FISWFNZET4P2J451BY5I5GERA5MZG34S2";
-export const config = require(`app/constants/shared/config`).default;
-export const explorer_api = "https://blockchainbalance.herokuapp.com";
+export const config = isTestnet ? require(`app/constants/shared/test_config`).default : require(`app/constants/shared/config`).default;
+export const explorer_api = isTestnet ? "https://blockchainbalancetest.herokuapp.com/" : "https://blockchainbalance.herokuapp.com";
 export const MAX_DECIMAL = 6;
 export const MAX_DECIMAL_FIAT = 2;
 
