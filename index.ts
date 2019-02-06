@@ -1,25 +1,20 @@
-import { C, RB, ConfigType, AssetType} from './interfaces';
+import { C, RB, ConfigType, IAssetType} from './interfaces';
 export * from './interfaces';
 import WAValidator from "wallet-address-validator";
+import { Socket } from 'phoenix';
+import { http2Ws } from 'app/utils';
 export const etherscan_api_key = "8FISWFNZET4P2J451BY5I5GERA5MZG34S2";
-export const darkColors = {
-    primary: {
-        light: "#d3d9ee",
-        main: "#6b80c5",
-        dark: "#3c50a3",
-        contrastText: "#fff",
-    },
-};
+export const config = require(`app/constants/shared/config`).default;
+export const explorer_api = "https://blockchainbalance.herokuapp.com";
 export const MAX_DECIMAL = 6;
 export const MAX_DECIMAL_FIAT = 2;
-export const isTestnet = true;
 
 export const transferABI = [{ constant: !1, inputs: [{ name: "_to", type: "address" }, { name: "_value", type: "uint256" }], name: "transfer", outputs: [{ name: "", type: "bool" }], type: "function" }];
 
 export const getAtomicValue = (config: C, rb: RB): number => {
     return config[rb.rel] ? config[rb.rel].decimals : 10 ** config[rb.base].assets[rb.rel].decimals;
 };
-export const getConfig = (config: C, rb: RB): ConfigType | ConfigType & AssetType =>  {
+export const getConfig = (config: C, rb: RB): ConfigType | ConfigType & IAssetType =>  {
     return config[rb.rel] ? config[rb.rel] : {
         ...config[rb.base]
         , ...config[rb.base].assets[rb.rel]};
@@ -66,20 +61,38 @@ export const smartTrim = (string, maxLength) => {
         + string.substring(midpoint + rstrip);
 };
 
-export const changelog = [
-{
-  title: "v0.02",
-  captions: [
-    "Added feature to remember mnemonic and passphrase from settings",
-    "Added feature to lock, unlock and forget wallets from settings",
-    "Ability to sort coins by price and name"
-  ],
-},
-{
-  title: "v0.01",
-  captions: [
-    "Added BTC, ETH, NEO, NANO, XRP, VET protocol",
-    "Added Backup and Restore feature from settings"
-  ],
-},
-]
+const socket = new Socket(http2Ws(`${explorer_api}/socket`))
+socket.connect()
+
+let info_channel = socket.channel("info")
+info_channel.join()
+
+export const initSocket = (walletStore) => {
+    info_channel.on("pong_balance", msg => {
+        if (msg.ticker == "NANO" && msg.balances.pending > 0) {
+            //pendingSyncNano({ config, rb: { rel: msg.ticker, base: msg.ticker }, balance: msg.balances.balance, pending: msg.balances.pending, address: self.keys[msg.ticker].address, options: { publicKey: self.keys[msg.ticker].publicKey, wif: self.keys[msg.ticker].wif } });
+        }
+        walletStore.setBalance(msg.ticker, msg.balances);
+    })
+    info_channel.on("pong_tx", msg => {
+        walletStore.setTxs(msg);
+    })
+    return { info_channel, socket };
+}
+export const syncTxs = ({ rel, base, address }) => {
+    info_channel.push('ping_txs', {
+        rel: rel,
+        base: base,
+        address: address,
+    })
+}
+
+export const syncBalances = (keys) => {
+    const coins = Object.keys(config).map((o) => {
+        return {
+            ticker: o,
+            address: keys[o].address
+        }
+    })
+    info_channel.push('ping_balance', { coins })
+}

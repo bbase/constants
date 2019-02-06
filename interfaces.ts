@@ -1,4 +1,4 @@
-import { number } from "prop-types";
+import { types, Instance } from 'mobx-state-tree';
 
 export interface RB {
     base: string;
@@ -42,16 +42,33 @@ export interface txParamsType {
     address: string;
     config: C;
 }
-export interface TransactionType {
-    from: string;
-    hash: string;
-    value: number;
-    kind: string;
-    fee: number;
-    timestamp: number;
-    confirmations?: number;
-    asset?: AssetType;
-}
+export interface generateKeysType {
+    _new: boolean;
+    _passphrase: string;
+    _mnemonic?: string;
+    store_mnemonic?: boolean;
+    store_passphrase?: boolean;
+};
+
+export const AssetType = types.model({
+    hash: types.string,
+    ticker: types.string,
+    name: types.string,
+    decimals: types.number,
+});
+export const TransactionType = types.model({
+    from: types.string,
+    hash: types.string,
+    value: types.number,
+    kind: types.string,
+    fee: types.number,
+    timestamp: types.number,
+    confirmations: types.optional(types.number, 0),
+    asset: types.maybe(AssetType),
+});
+export type ITransactionType = Instance<typeof TransactionType>;
+export type IAssetType = Instance<typeof AssetType>;
+
 export interface BalanceType {
     balance: number;
     pending?: number;
@@ -71,16 +88,9 @@ export interface WalletType {
     address: string;
     publicKey: string;
 }
-export interface AssetType{
-    hash: string;
-    ticker: string;
-    name: string;
-    decimals: number;
-}
 export interface AssetsType{
-    [key: string]: AssetType;
+    [key: string]: IAssetType;
 }
-
 export interface ConfigType{
     explorer: string;
     api: string;

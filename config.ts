@@ -152,6 +152,7 @@ const a: C = {
         name: "Neo",
         forks: [],
     },
+    /*
     NANO: {
         explorer: "https://www.nanode.co",
         api: "http://35.227.18.245:7076/",
@@ -164,6 +165,7 @@ const a: C = {
         forks: [],
         rep: "xrb_17krztbeyz1ubtkgqp9h1bewu1tz8sgnpoiii8q7c9n7gyf9jfmuxcydgufi",
     },
+    */
     VET: {
         explorer: "https://veforge.com",
         api: "https://veforge.com/api",
