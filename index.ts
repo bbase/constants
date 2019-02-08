@@ -6,7 +6,7 @@ import { http2Ws } from 'app/utils';
 const isTestnet = process.env.NODE_ENV !== 'production';
 export const etherscan_api_key = "8FISWFNZET4P2J451BY5I5GERA5MZG34S2";
 export const config = isTestnet ? require(`app/constants/shared/test_config`).default : require(`app/constants/shared/config`).default;
-export const explorer_api = isTestnet ? "https://blockchainbalancetest.herokuapp.com/" : "https://blockchainbalance.herokuapp.com";
+export const explorer_api = isTestnet ? "https://blockchainbalancetest.herokuapp.com" : "https://blockchainbalance.herokuapp.com";
 export const MAX_DECIMAL = 6;
 export const MAX_DECIMAL_FIAT = 2;
 
@@ -75,8 +75,8 @@ export const initSocket = (walletStore) => {
         }
         walletStore.setBalance(msg.ticker, msg.balances);
     })
-    info_channel.on("pong_tx", msg => {
-        walletStore.setTxs(msg);
+    info_channel.on("pong_txs", msg => {
+        walletStore.setTxs(msg.txs);
     })
     return { info_channel, socket };
 }
@@ -92,7 +92,7 @@ export const syncBalances = (keys) => {
     const coins = Object.keys(config).map((o) => {
         return {
             ticker: o,
-            address: keys[o].address
+            address: keys.get(o).address
         }
     })
     info_channel.push('ping_balance', { coins })
