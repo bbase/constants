@@ -33,18 +33,17 @@ export interface ethTransactionType {
     gasLimit: string;
     gasPrice: string;
     to: string;
-    from: string;
+    from?: string;
     data?: string;
     value: string;
 }
 export interface txParamsType {
     rb: RB;
     address: string;
-    config: C;
 }
 export interface generateKeysType {
-    _new: boolean;
-    _passphrase: string;
+    _new?: boolean;
+    _passphrase?: string;
     _mnemonic?: string;
     store_mnemonic?: boolean;
     store_passphrase?: boolean;

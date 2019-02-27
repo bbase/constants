@@ -193,6 +193,18 @@ const a: C = {
         node: "main",
         noFee: true,
     },
+    EOS: {
+        explorer: "https://xrpcharts.ripple.com/#/transactions",
+        api: "https://xrpnode.herokuapp.com/api",
+        rpc: "https://s.altnet.rippletest.net:51234",
+        code: 194,
+        decimals: 10 ** 6,
+        fee_label: "RAM",
+        base: true,
+        name: "EOS",
+        forks: [],
+        noFee: true,
+    },    
     /*
     "XMR": {
         "explorer": {
