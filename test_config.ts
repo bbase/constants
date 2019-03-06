@@ -114,7 +114,7 @@ const a = {
         forks: [],
         node: "test",
         noFee: true,
-    },
+    },/*
     XLM: {
         explorer: "http://horizon-testnet.stellar.org",
         api: "https://horizon-testnet.stellar.org",
@@ -125,7 +125,7 @@ const a = {
         name: "Stellar",
         forks: [],
         noFee: true,
-    },
+    },*/
     EOS: {
         explorer: "https://kylin.eosx.io/",
         api: "https://api-kylin.eoslaomao.com/v1",
