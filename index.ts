@@ -6,7 +6,7 @@ import { Socket } from 'phoenix';
 import { http2Ws } from 'app/utils';
 import * as omnijs from 'app/omnijs';
 import { hexlify } from 'ethers/utils';
-export const isTestnet = process.env.NODE_ENV == 'production' || process.env.NODE_ENV == 'test' ? false : true;
+export const isTestnet = process.env.NODE_ENVX == 'production' || process.env.NODE_ENVX == 'test' ? false : true;
 export const etherscan_api_key = "8FISWFNZET4P2J451BY5I5GERA5MZG34S2";
 export const config = isTestnet ? require(`app/constants/shared/test_config`).default : require(`app/constants/shared/config`).default;
 export const explorer_api = isTestnet ? "https://blockchainbalancetest.herokuapp.com" : "https://blockchainbalance.herokuapp.com";
